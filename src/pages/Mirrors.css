@@ -1,3 +1,65 @@
+@media (max-width: 600px) {
+	.chairs-page {
+		padding-bottom: 12px;
+		background-size: cover;
+	}
+	.chairs-container {
+		max-width: 98vw;
+		padding: 10px 4px 16px 4px;
+		border-radius: 10px;
+	}
+	.chairs-list-row {
+		flex-direction: column;
+		gap: 12px;
+		margin-bottom: 12px;
+		flex-wrap: nowrap;
+	}
+	.chair-card {
+		min-width: 0;
+		max-width: 98vw;
+		padding: 10px 4px;
+		border-radius: 10px;
+		font-size: 0.95rem;
+	}
+	.chair-card img {
+		width: 90vw;
+		height: 120px;
+		margin-bottom: 8px;
+		border-radius: 8px;
+	}
+	.chair-card h3 {
+		font-size: 1rem;
+		margin-bottom: 4px;
+	}
+	.chair-card p {
+		font-size: 0.95rem;
+		margin-bottom: 4px;
+	}
+	.chair-card .buy-btn {
+		font-size: 0.95rem;
+		padding: 6px 10px;
+		border-radius: 8px;
+		margin-top: 6px;
+	}
+	.chair-card .fav-btn {
+		top: 8px;
+		right: 8px;
+		font-size: 18px;
+		width: 28px;
+		height: 28px;
+		border-radius: 8px;
+	}
+	.chairs-title {
+		font-size: 1.3rem;
+		margin: 12px 0;
+	}
+	.back-btn {
+		margin: 8px 0 0 8px;
+		padding: 6px 10px;
+		font-size: 0.95rem;
+		border-radius: 8px;
+	}
+}
 /* Gradient hover effect for Mirrors page cards */
 .mirror-card-gradient:hover {
 	background: linear-gradient(135deg, #ffe0b2 0%, #ffd180 100%);

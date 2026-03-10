@@ -128,7 +128,7 @@ function CircleMirrors() {
                       }}
                     />
                     <h3 style={{ fontSize: '1.05rem', margin: '8px 0', color: '#b86b2a', fontWeight: 600 }}>{opt.name}</h3>
-                    <button className="buy-btn" style={{ fontSize: '0.95rem', padding: '7px 18px', borderRadius: 8 }} onClick={() => { setSelectedMirror(opt); setQuantity(1); }}>Buy Now</button>
+                    <button className="buy-btn" style={{ fontSize: '0.95rem', padding: '7px 18px', borderRadius: 8 }} onClick={() => { setSelectedMirror(opt); setQuantity(1); navigate('/items'); }}>Buy Now</button>
                   </div>
                 ))}
               </div>
@@ -299,39 +299,38 @@ function CircleMirrors() {
               </div>
               {/* 3D Model Viewer Modal */}
               {showAR && (
-                <div style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  width: '100vw',
-                  height: '100vh',
-                  background: 'rgba(0,0,0,0.85)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 4100
-                }}>
                   <div style={{
-                    background: '#fff7e6',
-                    borderRadius: 32,
-                    padding: '36px 48px 32px 48px',
-                    boxShadow: '0 12px 48px #4caf50cc',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    background: 'rgba(0,0,0,0.85)',
                     display: 'flex',
-                    flexDirection: 'column',
                     alignItems: 'center',
-                    position: 'relative',
-                    minWidth: 400,
-                    maxWidth: '98vw',
-                    maxHeight: '95vh',
+                    justifyContent: 'center',
+                    zIndex: 4100
                   }}>
-                    <h2 style={{marginBottom: 10, fontFamily: "'Playfair Display', serif", color: '#357a38', fontSize: '2rem', letterSpacing: 1}}>View in Your Room (AR)</h2>
-                    <p style={{marginBottom: 18, color: '#7c5a36', fontWeight: 500, fontSize: '1.1rem', textAlign: 'center'}}>Scan the QR code below or tap the button to view this mirror in your room using Augmented Reality (AR) on your mobile device.</p>
+                    <div className="tables-3d-modal" style={{
+                      background: '#fff7e6',
+                      borderRadius: 32,
+                      padding: '36px 48px 32px 48px',
+                      boxShadow: '0 12px 48px #4caf50cc',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      position: 'relative',
+                      maxWidth: '98vw',
+                      maxHeight: '95vh',
+                    }}>
+                    <h2 className="tables-3d-modal-title">View in Your Room (AR)</h2>
+                    <p className="tables-3d-modal-desc">Scan the QR code below or tap the button to view this mirror in your room using Augmented Reality (AR) on your mobile device.</p>
                     <model-viewer
                       src={selectedMirror?.model}
                       ar
                       ar-modes="scene-viewer quick-look"
                       camera-controls
-                      style={{ width: '320px', height: '320px', background: '#fff', borderRadius: '18px', boxShadow: '0 4px 24px #4caf50aa' }}
+                      className="tables-3d-modal-viewer"
                       ios-src={selectedMirror?.model}
                     ></model-viewer>
                     <a

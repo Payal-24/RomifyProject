@@ -1,3 +1,36 @@
+/* Responsive styles for cart item card and Buy Now button */
+@media (max-width: 600px) {
+  .cart-item-card {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 16px 6px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 18px #e2954744 !important;
+    align-items: flex-start !important;
+  }
+  .cart-item-card img {
+    width: 80vw !important;
+    height: 90px !important;
+    margin-bottom: 8px !important;
+    border-radius: 12px !important;
+  }
+  .cart-item-card .cart-item-title {
+    font-size: 1.2rem !important;
+    margin-bottom: 6px !important;
+  }
+  .cart-item-card .cart-item-details {
+    font-size: 0.95rem !important;
+    margin-bottom: 6px !important;
+  }
+  .cart-item-card .cart-buy-btn {
+    font-size: 1rem !important;
+    padding: 10px 18px !important;
+    border-radius: 8px !important;
+    margin-top: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 * {

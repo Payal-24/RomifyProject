@@ -426,56 +426,43 @@ function SwingChairs() {
               </div>
                         )}
             {show3D && (
-              <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100vw',
-                height: '100vh',
-                background: 'rgba(0,0,0,0.85)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 4000
-              }}>
                 <div style={{
-                  background: '#fff7e6',
-                  borderRadius: 32,
-                  padding: '36px 48px 32px 48px',
-                  boxShadow: '0 12px 48px #e29547cc',
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100vw',
+                  height: '100vh',
+                  background: 'rgba(0,0,0,0.85)',
                   display: 'flex',
-                  flexDirection: 'column',
                   alignItems: 'center',
-                  position: 'relative',
-                  minWidth: 600,
-                  maxWidth: '98vw',
-                  maxHeight: '95vh',
+                  justifyContent: 'center',
+                  zIndex: 4000
                 }}>
-                  <h2 style={{marginBottom: 10, fontFamily: "'Playfair Display', serif", color: '#b86b2a', fontSize: '2rem', letterSpacing: 1}}>3D/AR View: Swing Chair</h2>
-                  <p style={{marginBottom: 18, color: '#7c5a36', fontWeight: 500, fontSize: '1.1rem'}}>Interact with the model below. Use your mouse or touch to rotate, zoom, or view in AR on supported devices.</p>
+                  <div className="tables-3d-modal" style={{
+                    background: '#fff7e6',
+                    borderRadius: 32,
+                    padding: '36px 48px 32px 48px',
+                    boxShadow: '0 12px 48px #e29547cc',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    position: 'relative',
+                    maxWidth: '98vw',
+                    maxHeight: '95vh',
+                  }}>
+                  <h2 className="tables-3d-modal-title">3D/AR View: Swing Chair</h2>
+                  <p className="tables-3d-modal-desc">Interact with the model below. Use your mouse or touch to rotate, zoom, or view in AR on supported devices.</p>
                   <model-viewer
                     src={selectedChair.model || "/3dmodels3/swingchair_sample.glb"}
                     ar
                     ar-modes="webxr scene-viewer quick-look"
                     camera-controls
                     auto-rotate
-                    style={{ width: '520px', height: '520px', background: '#fff', borderRadius: '18px', boxShadow: '0 4px 24px #e29547aa' }}
+                    className="tables-3d-modal-viewer"
                   ></model-viewer>
                   <button
                     onClick={() => setShow3D(false)}
-                    style={{
-                      marginTop: 28,
-                      padding: '12px 32px',
-                      borderRadius: 10,
-                      background: '#b86b2a',
-                      color: '#fff',
-                      border: 'none',
-                      fontWeight: 700,
-                      fontSize: '1.1rem',
-                      boxShadow: '0 2px 12px #f7ede2',
-                      cursor: 'pointer',
-                      transition: 'background 0.22s, transform 0.22s',
-                    }}
+                    className="tables-3d-modal-btn"
                   >Close 3D View</button>
                 </div>
               </div>

@@ -1,3 +1,164 @@
+@media (max-width: 600px) {
+  .modal-close-btn {
+    top: 8px;
+    right: 8px;
+    font-size: 22px;
+    width: 28px;
+    height: 28px;
+  }
+  .almirahs-page {
+    padding-bottom: 12px;
+    background-size: cover;
+  }
+  .almirah-section {
+    margin: 12px auto;
+    padding: 10px 4px;
+    max-width: 98vw;
+    border-radius: 10px;
+  }
+  .almirahs-title {
+    font-size: 1.5rem;
+    margin: 12px 0 6px 0;
+  }
+  .almirahs-desc {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+  .almirahs-container {
+    max-width: 98vw;
+    padding: 10px 4px 16px 4px;
+    border-radius: 10px;
+  }
+  .almirahs-list-row {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+  }
+  .almirah-card {
+    min-width: 0;
+    max-width: 98vw;
+    padding: 10px 4px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+  .almirah-card img {
+    width: 90vw;
+    height: 120px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+  .almirah-card h3 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .almirah-card p {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .almirah-card button {
+    font-size: 0.95rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-top: 6px;
+  }
+  .back-btn {
+    margin: 8px 0 0 8px;
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+  /* Responsive 3D modal */
+  .almirahs-modal-3d {
+    min-width: 0 !important;
+    max-width: 98vw !important;
+    padding: 8px 2px !important;
+    border-radius: 10px !important;
+  }
+  .almirahs-modal-3d h2 {
+    font-size: 1.2rem !important;
+    margin-bottom: 6px !important;
+  }
+  .almirahs-modal-3d p {
+    font-size: 0.95rem !important;
+    margin-bottom: 6px !important;
+  }
+  .almirahs-modal-3d model-viewer {
+    width: 90vw !important;
+    height: 220px !important;
+    border-radius: 8px !important;
+  }
+  .almirahs-modal-3d button {
+    font-size: 0.95rem !important;
+    padding: 8px 18px !important;
+    border-radius: 8px !important;
+    margin-top: 12px !important;
+  }
+}
+@media (max-width: 600px) {
+  .almirahs-page {
+    padding-bottom: 12px;
+    background-size: cover;
+  }
+  .almirah-section {
+    margin: 12px auto;
+    padding: 10px 4px;
+    max-width: 98vw;
+    border-radius: 10px;
+  }
+  .almirahs-title {
+    font-size: 1.5rem;
+    margin: 12px 0 6px 0;
+  }
+  .almirahs-desc {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+  .almirahs-container {
+    max-width: 98vw;
+    padding: 10px 4px 16px 4px;
+    border-radius: 10px;
+  }
+  .almirahs-list-row {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+  }
+  .almirah-card {
+    min-width: 0;
+    max-width: 98vw;
+    padding: 10px 4px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+  .almirah-card img {
+    width: 90vw;
+    height: 120px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+  .almirah-card h3 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .almirah-card p {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .almirah-card button {
+    font-size: 0.95rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-top: 6px;
+  }
+  .back-btn {
+    margin: 8px 0 0 8px;
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+}
 .modal-close-btn {
   position: absolute;
   top: 18px;

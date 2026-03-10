@@ -466,40 +466,60 @@ function Chairs() {
                 justifyContent: 'center',
                 zIndex: 4000
               }}>
-                <div style={{
-                  background: '#fff7e6',
-                  borderRadius: 32,
-                  padding: '36px 48px 32px 48px',
-                  boxShadow: '0 12px 48px #e29547cc',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  position: 'relative',
-                  minWidth: 600,
-                  maxWidth: '98vw',
-                  maxHeight: '95vh',
-                }}>
-                  <h2 style={{marginBottom: 10, fontFamily: "'Playfair Display', serif", color: '#b86b2a', fontSize: '2rem', letterSpacing: 1}}>3D/AR View: Chair</h2>
-                  <p style={{marginBottom: 18, color: '#7c5a36', fontWeight: 500, fontSize: '1.1rem'}}>Interact with the model below. Use your mouse or touch to rotate, zoom, or view in AR on supported devices.</p>
+                <div
+                  className="chairs-modal-3d"
+                  style={{
+                    background: '#fff7e6',
+                    borderRadius: window.innerWidth <= 600 ? 10 : 32,
+                    padding: window.innerWidth <= 600 ? '8px 2px' : '36px 48px 32px 48px',
+                    boxShadow: '0 12px 48px #e29547cc',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    position: 'relative',
+                    minWidth: window.innerWidth <= 600 ? 0 : 600,
+                    maxWidth: window.innerWidth <= 600 ? '98vw' : '98vw',
+                    maxHeight: window.innerWidth <= 600 ? '95vh' : '95vh',
+                  }}
+                >
+                  <h2 style={{
+                    marginBottom: window.innerWidth <= 600 ? 6 : 10,
+                    fontFamily: "'Playfair Display', serif",
+                    color: '#b86b2a',
+                    fontSize: window.innerWidth <= 600 ? '1.2rem' : '2rem',
+                    letterSpacing: 1
+                  }}>3D/AR View: Chair</h2>
+                  <p style={{
+                    marginBottom: window.innerWidth <= 600 ? 6 : 18,
+                    color: '#7c5a36',
+                    fontWeight: 500,
+                    fontSize: window.innerWidth <= 600 ? '0.95rem' : '1.1rem'
+                  }}>Interact with the model below. Use your mouse or touch to rotate, zoom, or view in AR on supported devices.</p>
                   <model-viewer
                     src={selectedChair.model}
                     ar
                     ar-modes="webxr scene-viewer quick-look"
                     camera-controls
                     auto-rotate
-                    style={{ width: '520px', height: '520px', background: '#fff', borderRadius: '18px', boxShadow: '0 4px 24px #e29547aa' }}
+                    style={{
+                      width: window.innerWidth <= 600 ? '90vw' : '520px',
+                      height: window.innerWidth <= 600 ? '220px' : '520px',
+                      background: '#fff',
+                      borderRadius: window.innerWidth <= 600 ? 8 : 18,
+                      boxShadow: '0 4px 24px #e29547aa'
+                    }}
                   ></model-viewer>
                   <button
                     onClick={() => setShow3D(false)}
                     style={{
-                      marginTop: 28,
-                      padding: '12px 32px',
-                      borderRadius: 10,
+                      marginTop: window.innerWidth <= 600 ? 12 : 28,
+                      padding: window.innerWidth <= 600 ? '8px 18px' : '12px 32px',
+                      borderRadius: window.innerWidth <= 600 ? 8 : 10,
                       background: '#b86b2a',
                       color: '#fff',
                       border: 'none',
                       fontWeight: 700,
-                      fontSize: '1.1rem',
+                      fontSize: window.innerWidth <= 600 ? '0.95rem' : '1.1rem',
                       boxShadow: '0 2px 12px #f7ede2',
                       cursor: 'pointer',
                       transition: 'background 0.22s, transform 0.22s',

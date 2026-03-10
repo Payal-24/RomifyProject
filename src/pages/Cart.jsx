@@ -81,10 +81,10 @@ export default function Cart() {
                     e.currentTarget.style.boxShadow = '0 8px 32px #e29547aa';
                   }}
                   >
-                    <img src={item.product.image} alt={item.product.name} style={{ width: 90, height: 90, borderRadius: 18, objectFit: "cover", border: "2.5px solid #e29547", boxShadow: "0 2px 12px #e29547aa" }} />
+                    <img src={item.product.image} alt={item.product.name} className="cart-item-img" style={{ width: 90, height: 90, borderRadius: 18, objectFit: "cover", border: "2.5px solid #e29547", boxShadow: "0 2px 12px #e29547aa" }} />
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 900, fontSize: 24, color: "#b86b2a", marginBottom: 6, letterSpacing: 0.5 }}>{item.product.name}</div>
-                      <div style={{ color: "#b86b2a", fontSize: 17, marginBottom: 4 }}>Qty: {item.quantity}</div>
+                      <div className="cart-item-title" style={{ fontWeight: 900, fontSize: 24, color: "#b86b2a", marginBottom: 6, letterSpacing: 0.5 }}>{item.product.name}</div>
+                      <div className="cart-item-quantity" style={{ color: "#b86b2a", fontSize: 17, marginBottom: 4 }}>Qty: {item.quantity}</div>
                       <div style={{ color: "#7c5a36", fontWeight: 800, fontSize: 19, marginBottom: 4 }}>Price: {item.product.price}</div>
                       {item.product.details && (
                         <ul style={{ fontSize: 14, color: "#555", margin: "10px 0 0 0", paddingLeft: 18 }}>
@@ -95,6 +95,7 @@ export default function Cart() {
                       )}
                     </div>
                     <button
+                      className="cart-buy-btn"
                       style={{
                         padding: "14px 32px",
                         borderRadius: 12,
