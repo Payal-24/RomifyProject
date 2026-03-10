@@ -38,6 +38,17 @@
   text-align: center;
   animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+@media (max-width: 600px) {
+  .hero {
+    height: 220px;
+  }
+  .hero-content {
+    padding: 30px 8px;
+  }
+  .content-container {
+    max-width: 100%;
+  }
+}
 
 .content-container h1 {
   font-size: 3.5rem;

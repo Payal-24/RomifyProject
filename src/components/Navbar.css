@@ -38,6 +38,15 @@
 .logo-container:hover {
   transform: scale(1.08);
 }
+@media (max-width: 600px) {
+  .navbar {
+    padding: 12px 8px;
+    gap: 8px;
+  }
+  .logo-container {
+    gap: 4px;
+  }
+}
 
 .logo-icon {
   font-size: 36px;
