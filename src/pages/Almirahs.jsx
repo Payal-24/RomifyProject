@@ -490,25 +490,28 @@ function Almirahs() {
                     style={{ width: '320px', height: '320px', background: '#fff', borderRadius: '18px', boxShadow: '0 4px 24px #4caf50aa' }}
                     ios-src={selectedAlmirah.model}
                   ></model-viewer>
-                  <a
-                    href={selectedAlmirah.model}
-                    rel="noopener noreferrer"
-                    style={{
-                      marginTop: 18,
-                      padding: '10px 24px',
-                      borderRadius: 8,
-                      background: '#4caf50',
-                      color: '#fff',
-                      border: 'none',
-                      fontWeight: 600,
-                      fontSize: '1rem',
-                      textDecoration: 'none',
-                      boxShadow: '0 2px 8px #4caf5044',
-                      cursor: 'pointer',
-                      transition: 'background 0.22s, transform 0.22s',
-                    }}
-                    target="_blank"
-                  >Open in AR</a>
+                    <button
+                      style={{
+                        marginTop: 18,
+                        padding: '10px 24px',
+                        borderRadius: 8,
+                        background: '#4caf50',
+                        color: '#fff',
+                        border: 'none',
+                        fontWeight: 600,
+                        fontSize: '1rem',
+                        boxShadow: '0 2px 8px #4caf5044',
+                        cursor: 'pointer',
+                        transition: 'background 0.22s, transform 0.22s',
+                      }}
+                      onClick={() => {
+                        // Google Scene Viewer intent link
+                        const modelUrl = window.location.origin + selectedAlmirah.model;
+                        window.location.href = `intent://arvr.google.com/scene-viewer/1.0?file=${modelUrl}&mode=ar_preferred#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=${modelUrl};end;`;
+                      }}
+                    >
+                      Open in AR
+                    </button>
                   <button
                     onClick={() => setShowAR(false)}
                     style={{
