@@ -1,0 +1,206 @@
+@media (max-width: 600px) {
+  .chairs-page {
+    padding-bottom: 12px;
+    background-size: cover;
+  }
+  .chairs-container {
+    max-width: 98vw;
+    padding: 10px 4px 16px 4px;
+    border-radius: 10px;
+  }
+  .chairs-list-row {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+  }
+  .chair-card {
+    min-width: 0;
+    max-width: 98vw;
+    padding: 10px 4px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+  .chair-card img {
+    width: 90vw;
+    height: 120px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+  .chair-card h3 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .chair-card p {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .chair-card .buy-btn {
+    font-size: 0.95rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-top: 6px;
+  }
+  .chair-card .fav-btn {
+    top: 8px;
+    right: 8px;
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+  }
+  .chairs-title {
+    font-size: 1.3rem;
+    margin: 12px 0;
+  }
+  .back-btn {
+    margin: 8px 0 0 8px;
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+}
+/* Chairs Page Aesthetic Styles */
+.chairs-page {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f8f4ef 60%, #e7d7c9 100%);
+  padding-bottom: 40px;
+}
+
+.chairs-container {
+  max-width: 1200px;
+  margin: 40px auto 0 auto;
+  padding: 40px 32px 48px 32px;
+  border-radius: 32px;
+  background: linear-gradient(120deg, #be8a37 60%, #e7d7c9 100%);
+  box-shadow: 0 8px 32px #e2954722;
+  transition: box-shadow 0.3s, transform 0.22s;
+  position: relative;
+}
+.chairs-container:hover {
+  box-shadow: 0 16px 48px #e29547aa;
+  transform: scale(1.01) translateY(-4px);
+}
+
+.chairs-list-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 32px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.chair-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px #e2954722;
+  padding: 28px 24px 20px 24px;
+  min-width: 240px;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.25s, transform 0.22s, border 0.22s;
+  border: 2px solid #f3e8ff;
+  cursor: pointer;
+}
+.chair-card:hover {
+  box-shadow: 0 8px 32px #e29547aa;
+  transform: translateY(-8px) scale(1.04) rotate(-1deg);
+  border-color: #e29547;
+}
+.chair-card img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px #e2954744;
+  transition: box-shadow 0.2s;
+}
+.chair-card:hover img {
+  box-shadow: 0 4px 16px #e29547aa;
+}
+.chair-card h3 {
+  font-family: 'Playfair Display', serif;
+  color: #b86b2a;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.chair-card p {
+  color: #e48e38;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.chair-card .fav-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: linear-gradient(90deg, #e29547 60%, #b86b2a 100%);
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px #e2954744;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.chair-card .fav-btn.fav {
+  color: #fff;
+  background: linear-gradient(90deg, #b86b2a 60%, #e29547 100%);
+}
+.chair-card .fav-btn:hover {
+  box-shadow: 0 4px 16px #e29547aa;
+  background: linear-gradient(90deg, #b86b2a 60%, #e29547 100%);
+  color: #fff;
+}
+.chair-card .buy-btn {
+  margin-top: 10px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e29547 60%, #b86b2a 100%);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px #f7ede2;
+  transition: background 0.2s, transform 0.2s;
+}
+.chair-card .buy-btn:hover {
+  background: linear-gradient(90deg, #b86b2a 60%, #e29547 100%);
+  transform: scale(1.08);
+}
+
+.chairs-title {
+  text-align: center;
+  margin: 32px 0;
+  font-family: 'Playfair Display', serif;
+  color: #b86b2a;
+  font-size: 2.4rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #f7ede2;
+}
+
+.back-btn {
+  margin: 30px 0 0 30px;
+  background: #b86b2a;
+  color: #f7ede2;
+  border: 2px solid #e29547;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: 0 2px 8px #f7ede2;
+  cursor: pointer;
+}
+.back-btn:hover {
+  background: #e29547;
+  color: #fff;
+  border-color: #b86b2a;
+}
