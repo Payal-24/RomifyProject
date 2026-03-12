@@ -77,7 +77,7 @@
     margin-bottom: 6px;
   }
 }
-/* Custom horizontal scrollbar for subcategories slider */
+
 .subcategories-grid {
   scrollbar-color: #e48e38 #f5ebe0;
   scrollbar-width: thin;
@@ -111,7 +111,7 @@
 .view-more-btn:hover .view-more-arrow {
   transform: translateX(4px) scale(1.12);
 }
-/* 🌸 Nude Theme Colors */
+
 .items {
   padding: 60px 20px;
   max-width: 1200px;
@@ -121,7 +121,7 @@
 }
 
 
-/* 🔥 HEADER */
+
 .items-header {
   text-align: center;
   margin-bottom: 50px;
@@ -147,7 +147,7 @@ font-style: italic;
 
 }
 
-/* 🔥 GRID */
+
 .items-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -156,7 +156,7 @@ font-style: italic;
   align-items: stretch;
 }
 
-/* 🔥 ITEM CARD */
+
 .item-card {
   background: #f5ebe0;
   padding: 40px;
@@ -248,8 +248,8 @@ font-style: italic;
     color: #fff;
     transform: scale(1.05);
   }
-/* 🔥 SUBCATEGORY */
-/* Subcategories grid improvements */
+
+
 .subcategories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -300,7 +300,7 @@ font-style: italic;
   background: #a67c52;
   transform: scale(1.06);
 }
-/* Detail header improvements */
+
 .detail-header {
   display: flex;
   align-items: center;
@@ -326,7 +326,7 @@ font-style: italic;
   margin-bottom: 20px;
 }
 
-/* 🔥 RESPONSIVE */
+
 @media (max-width: 768px) {
   .hero-slider {
     height: 300px;

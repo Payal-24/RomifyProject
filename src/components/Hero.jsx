@@ -63,7 +63,7 @@ function Hero() {
         </div>
       </section>
 
-      {/* Modal for Read More */}
+
       {showModal && (
         <div style={{
           position: "fixed",

@@ -7,7 +7,7 @@ function Items() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
-  // Navbar handlers
+
   const handleContactClick = () => navigate("/contact");
   const handleHomeClick = () => navigate("/");
   const handleLoginClick = () => navigate("/login");
@@ -108,7 +108,7 @@ function Items() {
   if (selectedCategory) {
     return (
       <>
-        {/* Navbar removed to prevent double rendering */}
+        {}
         <section className="items-detail">
         <div className="detail-header">
           <button
@@ -175,16 +175,16 @@ function Items() {
           }}
         >
           {selectedCategory.subcategories.map((subcat, index) => {
-            // Generate a filename based on subcategory name (lowercase, no spaces)
+           
             let imgName = `/items/${subcat.toLowerCase().replace(/\s+/g, "_")}.jpg`;
-            // Furniture
+          
             if (subcat.toLowerCase() === "chairs") {
               imgName = "/items/chairs.jpg";
             }
             if (subcat.toLowerCase() === "swing chairs") {
               imgName = "/items/swing chairs.jpg";
             }
-            // Mirror
+        
             if (subcat.toLowerCase() === "home centered") {
               imgName = "/items/Home_Centered.jpg";
             }
@@ -200,7 +200,7 @@ function Items() {
             if(subcat.toLowerCase()==="designer mirror"){
               imgName="/items/designer.jpg";
             }
-            // Chandeliers
+      
             if (selectedCategory.name === "Chandeliers") {
               if (subcat.toLowerCase() === "crystal chandeliers") {
                 imgName = "/items/crystal chandelier.jpg";
@@ -228,7 +228,7 @@ function Items() {
                 imgName = "/items/Kids_Mats.jpg";
               }
             }
-                        // Vase
+                     
             if (selectedCategory.name === "Vase") {
               if (subcat.toLowerCase() === "ceramic vases") {
                 imgName = "/items/ceramic_vases.jpg";
@@ -345,7 +345,7 @@ function Items() {
   return (
     <>
       <Navbar />
-      {/* Navbar removed to prevent double rendering */}
+      {}
       <section className="items"> 
         <div className="items-header">
           <h1>Shop by Category</h1>
@@ -383,7 +383,7 @@ function Items() {
             </div>
           ))}
         </div>
-        {/* Back Button at top left with arrow icon */}
+        {}
         <button
           onClick={() => navigate("/")}
           style={{

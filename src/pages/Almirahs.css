@@ -68,7 +68,7 @@
     font-size: 0.95rem;
     border-radius: 8px;
   }
-  /* Responsive 3D modal */
+
   .almirahs-modal-3d {
     min-width: 0 !important;
     max-width: 98vw !important;
@@ -178,7 +178,7 @@
   box-shadow: 0 2px 8px #f7ede2;
   border: none;
 }
-/* Warm & Earthy refined palette */
+
 .almirahs-page {
   min-height: 100vh;
   background:

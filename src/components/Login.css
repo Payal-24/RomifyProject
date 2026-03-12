@@ -357,7 +357,7 @@
   pointer-events: none;
 }
 
-/* Google Email Modal */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -485,7 +485,7 @@
   cursor: not-allowed;
 }
 
-/* Login Image Section */
+
 .login-image-section {
   display: flex;
   align-items: center;
@@ -519,7 +519,7 @@
   transform: scale(1.05);
 }
 
-/* Success Popup */
+
 .success-overlay {
   position: fixed;
   top: 0;
@@ -606,7 +606,7 @@
   line-height: 1.6;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1024px) {
   .login-container {
     grid-template-columns: 1fr;

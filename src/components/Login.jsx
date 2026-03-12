@@ -40,7 +40,6 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       [name]: value,
     });
 
-    // Real-time email validation
     if (name === "email") {
       if (value && !validateEmail(value)) {
         setEmailError("Please enter a valid email address");
@@ -49,7 +48,6 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       }
     }
 
-    // Password strength check
     if (name === "password") {
       const strength = checkPasswordStrength(value);
       setPasswordStrength(strength);
@@ -76,7 +74,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate required fields
+    
     if (!formData.email.trim()) {
       alert("Email is required");
       return;
@@ -97,11 +95,11 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       return;
     }
 
-    // Simulate authentication
+
     setIsLoading(true);
 
     setTimeout(() => {
-      // Store user data in localStorage (for demo purposes)
+    
       const userData = {
         email: formData.email,
         loginTime: new Date().toLocaleString(),
@@ -116,21 +114,21 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       setSuccessMessage("Welcome back!");
       setShowSuccess(true);
 
-      // Reset form
+
       setFormData({
         email: "",
         password: "",
       });
       setPasswordStrength(0);
 
-      // Hide popup and trigger callback after 3 seconds
+ 
       setTimeout(() => {
         setShowSuccess(false);
         if (onLoginSuccess) {
           onLoginSuccess();
         }
       }, 3000);
-    }, 1500); // Simulate network delay
+    }, 1500); 
   };
 
   const handleGoogleLogin = () => {
@@ -152,7 +150,6 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     setShowGoogleModal(false);
 
     setTimeout(() => {
-      // Simulate Google login response with user's email
       const userData = {
         email: googleEmail,
         name: googleEmail.split("@")[0],
@@ -169,7 +166,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       setSuccessMessage(`Welcome, ${userData.name}!`);
       setShowSuccess(true);
 
-      // Reset form and modal
+
       setFormData({
         email: "",
         password: "",
@@ -178,7 +175,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       setGoogleEmailError("");
       setPasswordStrength(0);
 
-      // Hide popup and trigger callback after 3 seconds
+
       setTimeout(() => {
         setShowSuccess(false);
         if (onLoginSuccess) {
@@ -192,7 +189,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     setIsLoading(true);
 
     setTimeout(() => {
-      // Simulate Facebook login response
+      
       const userData = {
         email: "user@facebook.com",
         name: "Facebook User",
@@ -209,14 +206,14 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       setSuccessMessage("Welcome, Facebook User!");
       setShowSuccess(true);
 
-      // Reset form
+      
       setFormData({
         email: "",
         password: "",
       });
       setPasswordStrength(0);
 
-      // Hide popup and trigger callback after 3 seconds
+      
       setTimeout(() => {
         setShowSuccess(false);
         if (onLoginSuccess) {
@@ -361,7 +358,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
         </div>
       </div>
 
-      {/* Google Email Modal */}
+      
       {showGoogleModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -404,7 +401,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
         </div>
       )}
 
-      {/* Success Popup */}
+      
       {showSuccess && (
         <div className="success-overlay">
           <div className="success-popup">

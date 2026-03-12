@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-/* Responsive styles for cart item card and Buy Now button */
+
 @media (max-width: 600px) {
   .cart-item-card {
     flex-direction: column !important;
@@ -57,7 +57,7 @@ button {
   font-family: 'Poppins', sans-serif;
 }
 
-/* Scrollbar Styling */
+
 ::-webkit-scrollbar {
   width: 10px;
 }

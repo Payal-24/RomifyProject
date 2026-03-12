@@ -91,7 +91,7 @@
     margin-bottom: 12px;
   }
 }
-/* Improve text selection contrast for Contact */
+
 ::selection {
   background: #8b6f47;
   color: #fff;

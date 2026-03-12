@@ -60,7 +60,7 @@
 		border-radius: 8px;
 	}
 }
-/* Gradient hover effect for Mirrors page cards */
+
 .mirror-card-gradient:hover {
 	background: linear-gradient(135deg, #ffe0b2 0%, #ffd180 100%);
 	box-shadow: 0 4px 18px #e2954744, 0 2px 10px #e2954722;

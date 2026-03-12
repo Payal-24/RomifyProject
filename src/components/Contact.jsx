@@ -11,7 +11,7 @@ function Contact() {
   useEffect(() => {
     if (state.succeeded) {
       setShowSuccess(true);
-      // Reset form fields
+   
       if (formRef.current) {
         formRef.current.reset();
       }

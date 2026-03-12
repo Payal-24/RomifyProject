@@ -1,4 +1,4 @@
-/* Hero Image Section */
+
 .hero {
   width: 100%;
   height: 500px;
@@ -24,7 +24,7 @@
   }
 }
 
-/* Content Section */
+
 .hero-content {
   width: 100%;
   padding: 80px 20px;
@@ -76,7 +76,7 @@
   }
 }
 
-/* Featured Content Section */
+
 .featured-content {
   width: 100%;
   padding: 80px 20px;
@@ -199,7 +199,7 @@
   }
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .featured-container {
     grid-template-columns: 1fr;

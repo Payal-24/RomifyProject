@@ -1,4 +1,4 @@
-/* CartIcon styles for Navbar */
+
 .navbar-carticon {
   position: absolute;
   top: 18px;
@@ -58,7 +58,7 @@
     right: 2px;
   }
 }
-/* Navbar */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -86,7 +86,7 @@
   }
 }
 
-/* Logo Container */
+
 .logo-container {
   display: flex;
   align-items: center;
@@ -104,11 +104,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* animation removed for static icon */
+
 }
 
 
-/* bounce keyframes removed for static icon */
+
 
 .logo {
   font-size: 32px;
@@ -204,7 +204,7 @@
   height: 300px;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .navbar {
     padding: 15px 20px;
