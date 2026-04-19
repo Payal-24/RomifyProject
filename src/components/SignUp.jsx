@@ -1,7 +1,12 @@
 import "./SignUp.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function SignUp({ onSignUpSuccess }) {
+  const navigate = useNavigate();
+  const { register } = useAuth();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -92,7 +97,7 @@ function SignUp({ onSignUpSuccess }) {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = validateForm();
@@ -102,23 +107,17 @@ function SignUp({ onSignUpSuccess }) {
       return;
     }
 
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    setTimeout(() => {
-      // Store user data in localStorage
-      const userData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        signUpTime: new Date().toLocaleString(),
-        signedUp: true,
-        signUpMethod: "email",
-      };
+      // Call register from AuthContext - sends to backend API
+      const response = await register(
+        formData.email,
+        formData.password,
+        `${formData.firstName} ${formData.lastName}`
+      );
 
-      localStorage.setItem("romifyNewUser", JSON.stringify(userData));
-
-      console.log("Sign up successful:", userData);
-      setIsLoading(false);
+      console.log("Sign up successful:", response);
       setSuccessMessage(
         `Welcome, ${formData.firstName}! Your account has been created.`
       );
@@ -136,33 +135,36 @@ function SignUp({ onSignUpSuccess }) {
       setPasswordStrength(0);
       setErrors({});
 
-      // Hide popup and trigger callback after 3 seconds
+      // Hide popup and redirect after 2 seconds
       setTimeout(() => {
         setShowSuccess(false);
         if (onSignUpSuccess) {
           onSignUpSuccess();
         }
-      }, 3000);
-    }, 1500);
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Sign up error:", error);
+      setErrors({
+        general: error.message || "Sign up failed. Please try again.",
+      });
+      setIsLoading(false);
+    }
   };
 
-  const handleGoogleSignUp = () => {
-    setIsLoading(true);
+  const handleGoogleSignUp = async () => {
+    try {
+      setIsLoading(true);
+      
+      // For Google OAuth, use email as username and a placeholder password
+      const googleEmail = "newuser@gmail.com";
+      const response = await register(
+        googleEmail,
+        "google-oauth-token",
+        "Google User"
+      );
 
-    setTimeout(() => {
-      const userData = {
-        email: "newuser@gmail.com",
-        firstName: "Google",
-        lastName: "User",
-        signUpTime: new Date().toLocaleString(),
-        signedUp: true,
-        signUpMethod: "google",
-      };
-
-      localStorage.setItem("romifyNewUser", JSON.stringify(userData));
-
-      console.log("Google sign up successful:", userData);
-      setIsLoading(false);
+      console.log("Google sign up successful:", response);
       setSuccessMessage("Account created with Google!");
       setShowSuccess(true);
 
@@ -182,27 +184,30 @@ function SignUp({ onSignUpSuccess }) {
         if (onSignUpSuccess) {
           onSignUpSuccess();
         }
-      }, 3000);
-    }, 1500);
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Google sign up error:", error);
+      setErrors({
+        general: "Google sign up failed. Please try again.",
+      });
+      setIsLoading(false);
+    }
   };
 
-  const handleFacebookSignUp = () => {
-    setIsLoading(true);
+  const handleFacebookSignUp = async () => {
+    try {
+      setIsLoading(true);
 
-    setTimeout(() => {
-      const userData = {
-        email: "newuser@facebook.com",
-        firstName: "Facebook",
-        lastName: "User",
-        signUpTime: new Date().toLocaleString(),
-        signedUp: true,
-        signUpMethod: "facebook",
-      };
+      // For Facebook OAuth, use email as username and a placeholder password
+      const facebookEmail = "newuser@facebook.com";
+      const response = await register(
+        facebookEmail,
+        "facebook-oauth-token",
+        "Facebook User"
+      );
 
-      localStorage.setItem("romifyNewUser", JSON.stringify(userData));
-
-      console.log("Facebook sign up successful:", userData);
-      setIsLoading(false);
+      console.log("Facebook sign up successful:", response);
       setSuccessMessage("Account created with Facebook!");
       setShowSuccess(true);
 
@@ -222,8 +227,15 @@ function SignUp({ onSignUpSuccess }) {
         if (onSignUpSuccess) {
           onSignUpSuccess();
         }
-      }, 3000);
-    }, 1500);
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Facebook sign up error:", error);
+      setErrors({
+        general: "Facebook sign up failed. Please try again.",
+      });
+      setIsLoading(false);
+    }
   };
 
   const getPasswordStrengthLabel = () => {
@@ -251,6 +263,12 @@ function SignUp({ onSignUpSuccess }) {
             <h1>Create Account</h1>
             <p>Join Romify and explore beautiful interior designs</p>
           </div>
+
+          {errors.general && (
+            <div className="error-banner">
+              <span>{errors.general}</span>
+            </div>
+          )}
 
           <form className="signup-form" onSubmit={handleSubmit}>
             <div className="form-row">

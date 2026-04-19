@@ -1,8 +1,12 @@
 import "./Login.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Login({ onLoginSuccess, onSignUpClick }) {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -10,6 +14,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [generalError, setGeneralError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +44,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       ...formData,
       [name]: value,
     });
+    setGeneralError("");
 
     if (name === "email") {
       if (value && !validateEmail(value)) {
@@ -71,12 +77,12 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setGeneralError("");
 
-    
     if (!formData.email.trim()) {
-      alert("Email is required");
+      setEmailError("Email is required");
       return;
     }
 
@@ -86,7 +92,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     }
 
     if (!formData.password.trim()) {
-      alert("Password is required");
+      setPasswordError("Password is required");
       return;
     }
 
@@ -95,40 +101,36 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       return;
     }
 
+    try {
+      setIsLoading(true);
 
-    setIsLoading(true);
+      // Call login from AuthContext
+      const response = await login(formData.email, formData.password);
 
-    setTimeout(() => {
-    
-      const userData = {
-        email: formData.email,
-        loginTime: new Date().toLocaleString(),
-        loggedIn: true,
-        loginMethod: "email",
-      };
-
-      localStorage.setItem("romifyUser", JSON.stringify(userData));
-
-      console.log("Login successful:", userData);
-      setIsLoading(false);
+      console.log("Login successful:", response);
       setSuccessMessage("Welcome back!");
       setShowSuccess(true);
 
-
+      // Clear form
       setFormData({
         email: "",
         password: "",
       });
       setPasswordStrength(0);
 
- 
+      // Navigate after showing success message
       setTimeout(() => {
         setShowSuccess(false);
         if (onLoginSuccess) {
           onLoginSuccess();
         }
-      }, 3000);
-    }, 1500); 
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Login error:", error);
+      setGeneralError(error.message || "Login failed. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -137,7 +139,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
 
   const handleGoogleModalSubmit = () => {
     if (!googleEmail.trim()) {
-      alert("Please enter an email address");
+      setGoogleEmailError("Please enter an email address");
       return;
     }
 
@@ -149,77 +151,67 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     setIsLoading(true);
     setShowGoogleModal(false);
 
-    setTimeout(() => {
-      const userData = {
-        email: googleEmail,
-        name: googleEmail.split("@")[0],
-        loginTime: new Date().toLocaleString(),
-        loggedIn: true,
-        loginMethod: "google",
-        profilePicture: "https://via.placeholder.com/150",
-      };
+    // Simulate Google login (in production, integrate with Google OAuth)
+    setTimeout(async () => {
+      try {
+        const response = await login(googleEmail, "google-oauth-token");
 
-      localStorage.setItem("romifyUser", JSON.stringify(userData));
+        setSuccessMessage(`Welcome, ${googleEmail.split("@")[0]}!`);
+        setShowSuccess(true);
 
-      console.log("Google login successful:", userData);
-      setIsLoading(false);
-      setSuccessMessage(`Welcome, ${userData.name}!`);
-      setShowSuccess(true);
+        setFormData({
+          email: "",
+          password: "",
+        });
+        setGoogleEmail("");
+        setGoogleEmailError("");
+        setPasswordStrength(0);
 
-
-      setFormData({
-        email: "",
-        password: "",
-      });
-      setGoogleEmail("");
-      setGoogleEmailError("");
-      setPasswordStrength(0);
-
-
-      setTimeout(() => {
-        setShowSuccess(false);
-        if (onLoginSuccess) {
-          onLoginSuccess();
-        }
-      }, 3000);
+        setTimeout(() => {
+          setShowSuccess(false);
+          if (onLoginSuccess) {
+            onLoginSuccess();
+          }
+          navigate("/");
+        }, 2000);
+      } catch (error) {
+        console.error("Google login error:", error);
+        setGeneralError("Google login failed. Please try again.");
+        setIsLoading(false);
+        setShowGoogleModal(true);
+      }
     }, 1500);
   };
 
   const handleFacebookLogin = () => {
     setIsLoading(true);
 
-    setTimeout(() => {
-      
-      const userData = {
-        email: "user@facebook.com",
-        name: "Facebook User",
-        loginTime: new Date().toLocaleString(),
-        loggedIn: true,
-        loginMethod: "facebook",
-        profilePicture: "https://via.placeholder.com/150",
-      };
+    // Simulate Facebook login (in production, integrate with Facebook SDK)
+    setTimeout(async () => {
+      try {
+        const response = await login("user@facebook.com", "facebook-oauth-token");
 
-      localStorage.setItem("romifyUser", JSON.stringify(userData));
+        setSuccessMessage("Welcome, Facebook User!");
+        setShowSuccess(true);
 
-      console.log("Facebook login successful:", userData);
-      setIsLoading(false);
-      setSuccessMessage("Welcome, Facebook User!");
-      setShowSuccess(true);
+        setFormData({
+          email: "",
+          password: "",
+        });
+        setPasswordStrength(0);
 
-      
-      setFormData({
-        email: "",
-        password: "",
-      });
-      setPasswordStrength(0);
-
-      
-      setTimeout(() => {
-        setShowSuccess(false);
-        if (onLoginSuccess) {
-          onLoginSuccess();
-        }
-      }, 3000);
+        setTimeout(() => {
+          setShowSuccess(false);
+          if (onLoginSuccess) {
+            onLoginSuccess();
+          }
+          navigate("/");
+        }, 2000);
+      } catch (error) {
+        console.error("Facebook login error:", error);
+        setGeneralError("Facebook login failed. Please try again.");
+        setIsLoading(false);
+      }
     }, 1500);
   };
 
@@ -248,6 +240,12 @@ function Login({ onLoginSuccess, onSignUpClick }) {
             <h1>Welcome Back</h1>
             <p>Sign in to your Romify account</p>
           </div>
+
+          {generalError && (
+            <div className="error-banner">
+              <span>{generalError}</span>
+            </div>
+          )}
 
           <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-group">

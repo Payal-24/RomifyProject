@@ -27,39 +27,48 @@ import FlowerVase from "./pages/FlowerVase";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
+import usePageTitle from "./hooks/usePageTitle";
+
+// Page Title Wrapper Component
+function PageWithTitle({ Component, title }) {
+  usePageTitle(title);
+  return <Component />;
+}
 
 function AppContent() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/items" element={<Items/>}></Route>
-        <Route path="/almirahs" element={<Almirahs />} />
-        <Route path="/chairs" element={<Chairs />} />
-        <Route path="/tables" element={<Tables />} />
-        <Route path="/beds" element={<Beds />} />
-        <Route path="/SwingChairs" element={<SwingChairs />} />
-        <Route path="/homecentered" element={<Mirrors />} />
-        <Route path="/mirrors/arched" element={<ArchedMirrors />} />
-        <Route path="/mirrors/circle" element={<CircleMirrors />} />
-        <Route path="/chandeliers/crystal" element={<CrystalChandeliers />} />
-        <Route path="/chandeliers/modern" element={<ModernChandeliers />} />
-        <Route path="/chandeliers/traditional" element={<TraditionalChandeliers />} />
-        <Route path="/chandeliers/pendant" element={<PendantLights />} />
-        <Route path="/mats/doormats" element={<DoorMats />} />
-        <Route path="/mats/floormats" element={<FloorMats />} />
-        <Route path="/couches" element={<Couches />} />
-        <Route path="/doubleseater" element={<Couches doubleSeaterOnly={true} />} />
-        <Route path="/l-shaped" element={<LShapedCouches />} />
-        <Route path="/ceramicvases" element={<CeramicVases />} />
-        <Route path="/glassvases" element={<GlassVases />} />
-        <Route path="/metalvases" element={<MetalVases />} />
-        <Route path="/decorativevases" element={<DecorativeVases />} />
-        <Route path="/flowervase" element={<FlowerVase />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<PageWithTitle Component={Home} title="Romify - Home" />} />
+        <Route path="/items" element={<PageWithTitle Component={Items} title="Romify - Items" />}></Route>
+        <Route path="/almirahs" element={<PageWithTitle Component={Almirahs} title="Romify - Almirahs" />} />
+        <Route path="/chairs" element={<PageWithTitle Component={Chairs} title="Romify - Chairs" />} />
+        <Route path="/tables" element={<PageWithTitle Component={Tables} title="Romify - Tables" />} />
+        <Route path="/beds" element={<PageWithTitle Component={Beds} title="Romify - Beds" />} />
+        <Route path="/SwingChairs" element={<PageWithTitle Component={SwingChairs} title="Romify - Swing Chairs" />} />
+        <Route path="/homecentered" element={<PageWithTitle Component={Mirrors} title="Romify - Mirrors" />} />
+        <Route path="/mirrors/arched" element={<PageWithTitle Component={ArchedMirrors} title="Romify - Arched Mirrors" />} />
+        <Route path="/mirrors/circle" element={<PageWithTitle Component={CircleMirrors} title="Romify - Circle Mirrors" />} />
+        <Route path="/chandeliers/crystal" element={<PageWithTitle Component={CrystalChandeliers} title="Romify - Crystal Chandeliers" />} />
+        <Route path="/chandeliers/modern" element={<PageWithTitle Component={ModernChandeliers} title="Romify - Modern Chandeliers" />} />
+        <Route path="/chandeliers/traditional" element={<PageWithTitle Component={TraditionalChandeliers} title="Romify - Traditional Chandeliers" />} />
+        <Route path="/chandeliers/pendant" element={<PageWithTitle Component={PendantLights} title="Romify - Pendant Lights" />} />
+        <Route path="/mats/doormats" element={<PageWithTitle Component={DoorMats} title="Romify - Door Mats" />} />
+        <Route path="/mats/floormats" element={<PageWithTitle Component={FloorMats} title="Romify - Floor Mats" />} />
+        <Route path="/couches" element={<PageWithTitle Component={Couches} title="Romify - Couches" />} />
+        <Route path="/doubleseater" element={<PageWithTitle Component={() => <Couches doubleSeaterOnly={true} />} title="Romify - Double Seater Couches" />} />
+        <Route path="/l-shaped" element={<PageWithTitle Component={LShapedCouches} title="Romify - L-Shaped Couches" />} />
+        <Route path="/ceramicvases" element={<PageWithTitle Component={CeramicVases} title="Romify - Ceramic Vases" />} />
+        <Route path="/glassvases" element={<PageWithTitle Component={GlassVases} title="Romify - Glass Vases" />} />
+        <Route path="/metalvases" element={<PageWithTitle Component={MetalVases} title="Romify - Metal Vases" />} />
+        <Route path="/decorativevases" element={<PageWithTitle Component={DecorativeVases} title="Romify - Decorative Vases" />} />
+        <Route path="/flowervase" element={<PageWithTitle Component={FlowerVase} title="Romify - Flower Vase" />} />
+        <Route path="/cart" element={<PageWithTitle Component={Cart} title="Romify - Shopping Cart" />} />
+        <Route path="/contact" element={<PageWithTitle Component={Contact} title="Romify - Contact Us" />} />
+        <Route path="/login" element={<PageWithTitle Component={Login} title="Romify - Login" />} />
+        <Route path="/signup" element={<PageWithTitle Component={SignUp} title="Romify - Sign Up" />} />
       </Routes>
     </>
   );
@@ -68,7 +77,11 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <CartProvider>
+          <AppContent />
+        </CartProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
