@@ -16,8 +16,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key_change_in_production";
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/romify";
+const MONGODB_URI = process.env.MONGODB_URI || "";
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || "change_this_admin_api_key";
 const SMTP_HOST = process.env.SMTP_HOST || "";
 const SMTP_PORT = process.env.SMTP_PORT || "";
@@ -78,6 +77,10 @@ const User = mongoose.model("User", userSchema);
 let connectPromise = null;
 const connectDB = async () => {
   try {
+    if (!MONGODB_URI) {
+      throw new Error("MONGODB_URI is not configured. Add a MongoDB Atlas connection string in Vercel environment variables.");
+    }
+
     if (mongoose.connection.readyState === 1) {
       return mongoose.connection;
     }
