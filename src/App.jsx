@@ -12,7 +12,7 @@ import SwingChairs from "./pages/SwingChairs";
 import Mirrors from "./pages/Mirrors";
 import ArchedMirrors from "./pages/ArchedMirrors";
 import CircleMirrors from "./pages/CircleMirrors";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import CartIcon from "./components/CartIcon";
 import CrystalChandeliers from "./pages/CrystalChandeliers";
 import ModernChandeliers from "./pages/ModernChandeliers";
@@ -94,13 +94,13 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider>
         <CartProvider>
           <AppContent />
         </CartProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
