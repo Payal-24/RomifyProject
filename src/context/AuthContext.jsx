@@ -1,7 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
-const API_BASE_URL = "http://localhost:3001"; // Updated port
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+
+const ADMIN_CREDENTIALS = {
+  email: import.meta.env.VITE_ADMIN_EMAIL || "admin@example.com",
+  password: import.meta.env.VITE_ADMIN_PASSWORD || "change_this_password",
+};
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -21,11 +26,41 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email, password, isAdminLogin = false) => {
     try {
       setLoading(true);
       setError(null);
 
+      // Check for admin login
+      if (isAdminLogin) {
+        if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
+          const adminUser = {
+            id: "admin-001",
+            email: ADMIN_CREDENTIALS.email,
+            name: "Admin User",
+            role: "admin",
+          };
+          const adminToken = "admin-token-" + Date.now();
+
+          // Store token and user
+          localStorage.setItem("authToken", adminToken);
+          localStorage.setItem("authUser", JSON.stringify(adminUser));
+
+          setToken(adminToken);
+          setUser(adminUser);
+
+          return {
+            success: true,
+            token: adminToken,
+            user: adminUser,
+            message: "Admin login successful",
+          };
+        } else {
+          throw new Error("Invalid admin credentials");
+        }
+      }
+
+      // Regular user login
       const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
@@ -38,6 +73,11 @@ export function AuthProvider({ children }) {
 
       if (!data.success) {
         throw new Error(data.message || "Login failed");
+      }
+
+      // Add default role if not present
+      if (data.user && !data.user.role) {
+        data.user.role = "user";
       }
 
       // Store token and user
@@ -91,6 +131,8 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // socialLogin removed — only local email/password authentication supported
+
   const logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
@@ -131,6 +173,7 @@ export function AuthProvider({ children }) {
         error,
         login,
         register,
+        
         logout,
         verifyToken,
         isAuthenticated,

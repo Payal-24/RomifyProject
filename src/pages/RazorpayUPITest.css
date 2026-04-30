@@ -1,0 +1,8 @@
+.razorpay-test { padding: 40px; }
+.razorpay-wrap { max-width: 720px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+.razorpay-wrap h1 { margin: 0 0 12px; }
+.razorpay-wrap .field { margin: 12px 0; }
+.razorpay-wrap input { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #ddd; }
+.razorpay-wrap .actions { margin-top: 16px; }
+.razorpay-wrap .primary { background: #0a6cff; color: white; padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; }
+.razorpay-wrap .status { margin-top: 12px; color: #333; }

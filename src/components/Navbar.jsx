@@ -1,9 +1,26 @@
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import CartIcon from "./CartIcon";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
+  const { isAuthenticated, loading } = useAuth();
+
+  const handleShopClick = () => {
+    if (!loading && !isAuthenticated) {
+      navigate("/login", {
+        state: {
+          from: "/items",
+          authMessage: "Please login first to shop.",
+        },
+      });
+      return;
+    }
+
+    navigate("/items");
+  };
+
   return (
     <nav className="navbar" style={{ position: "relative" }}>
       <style>{`
@@ -55,7 +72,7 @@ function Navbar() {
         </li>
       </ul>
 
-      <button className="nav-btn" onClick={() => navigate("/items")}>Shop Now</button>
+      <button className="nav-btn" onClick={handleShopClick}>Shop Now</button>
       <div style={{ position: "absolute", top: 0, right: 0 }}>
         <CartIcon />
       </div>

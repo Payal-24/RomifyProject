@@ -1,6 +1,7 @@
 import "./SignUp.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TermsModal from "./TermsModal";
 import { useAuth } from "../context/AuthContext";
 
 function SignUp({ onSignUpSuccess }) {
@@ -18,6 +19,7 @@ function SignUp({ onSignUpSuccess }) {
 
   const [errors, setErrors] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
@@ -155,42 +157,10 @@ function SignUp({ onSignUpSuccess }) {
   const handleGoogleSignUp = async () => {
     try {
       setIsLoading(true);
-      
-      // For Google OAuth, use email as username and a placeholder password
-      const googleEmail = "newuser@gmail.com";
-      const response = await register(
-        googleEmail,
-        "google-oauth-token",
-        "Google User"
-      );
-
-      console.log("Google sign up successful:", response);
-      setSuccessMessage("Account created with Google!");
-      setShowSuccess(true);
-
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        agreeTerms: false,
-      });
-      setPasswordStrength(0);
-      setErrors({});
-
-      setTimeout(() => {
-        setShowSuccess(false);
-        if (onSignUpSuccess) {
-          onSignUpSuccess();
-        }
-        navigate("/");
-      }, 2000);
+      // Social signups removed
     } catch (error) {
-      console.error("Google sign up error:", error);
-      setErrors({
-        general: "Google sign up failed. Please try again.",
-      });
+      console.error("Google sign up error (removed):", error);
+      setErrors({ general: "Sign up failed. Please try again." });
       setIsLoading(false);
     }
   };
@@ -198,42 +168,10 @@ function SignUp({ onSignUpSuccess }) {
   const handleFacebookSignUp = async () => {
     try {
       setIsLoading(true);
-
-      // For Facebook OAuth, use email as username and a placeholder password
-      const facebookEmail = "newuser@facebook.com";
-      const response = await register(
-        facebookEmail,
-        "facebook-oauth-token",
-        "Facebook User"
-      );
-
-      console.log("Facebook sign up successful:", response);
-      setSuccessMessage("Account created with Facebook!");
-      setShowSuccess(true);
-
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        agreeTerms: false,
-      });
-      setPasswordStrength(0);
-      setErrors({});
-
-      setTimeout(() => {
-        setShowSuccess(false);
-        if (onSignUpSuccess) {
-          onSignUpSuccess();
-        }
-        navigate("/");
-      }, 2000);
+      // Social signups removed
     } catch (error) {
-      console.error("Facebook sign up error:", error);
-      setErrors({
-        general: "Facebook sign up failed. Please try again.",
-      });
+      console.error("Facebook sign up error (removed):", error);
+      setErrors({ general: "Sign up failed. Please try again." });
       setIsLoading(false);
     }
   };
@@ -383,9 +321,9 @@ function SignUp({ onSignUpSuccess }) {
                 />
                 <span>
                   I agree to the{" "}
-                  <a href="#" className="terms-link">
+                  <button type="button" className="terms-link" onClick={() => setShowTerms(true)}>
                     Terms and Conditions
-                  </a>
+                  </button>
                 </span>
               </label>
               {errors.agreeTerms && (
@@ -440,6 +378,7 @@ function SignUp({ onSignUpSuccess }) {
           </div>
         </div>
       )}
+      {showTerms && <TermsModal onClose={() => setShowTerms(false)} />}
     </section>
   );
 }

@@ -2,14 +2,31 @@ import React from "react";
 import { useCart } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Cart() {
-  const { cart } = useCart();
+  const { cart, dispatch } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const total = cart.items.reduce((sum, item) => {
     const price = parseInt(item.product.price.replace(/[^0-9]/g, ""), 10) || 0;
     return sum + price * item.quantity;
   }, 0);
+
+  const handleCheckout = () => {
+    if (cart.items.length === 0) return;
+
+    navigate("/checkout", {
+      state: {
+        items: cart.items,
+        source: "cart",
+        customer: {
+          name: user?.name || "",
+          email: user?.email || "",
+        },
+      },
+    });
+  };
   // Dotted pattern background
   return (
     <>
@@ -99,40 +116,78 @@ export default function Cart() {
                         </ul>
                       )}
                     </div>
-                    <button
-                      className="cart-buy-btn"
-                      style={{
-                        padding: "14px 32px",
-                        borderRadius: 12,
-                        background: "linear-gradient(135deg,#e29547 60%,#b86b2a 100%)",
-                        color: "#fff",
-                        border: "none",
-                        fontWeight: 900,
-                        fontSize: "1.15rem",
-                        boxShadow: "0 2px 12px #f7ede2",
-                        cursor: "pointer",
-                        transition: "background 0.22s, transform 0.22s",
-                        letterSpacing: 0.5
-                      }}
-                      onMouseOver={e => {
-                        e.currentTarget.style.background = '#b86b2a';
-                        e.currentTarget.style.transform = 'scale(1.07)';
-                      }}
-                      onMouseOut={e => {
-                        e.currentTarget.style.background = 'linear-gradient(135deg,#e29547 60%,#b86b2a 100%)';
-                        e.currentTarget.style.transform = 'scale(1)';
-                      }}
-                      onClick={() => {
-                        window.alert(`Buying ${item.product.name} for ${item.product.price}`);
-                      }}
-                    >Buy Now</button>
+                    <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "flex-end" }}>
+                      <button
+                        className="cart-buy-btn"
+                        style={{
+                          padding: "14px 32px",
+                          borderRadius: 12,
+                          background: "linear-gradient(135deg,#e29547 60%,#b86b2a 100%)",
+                          color: "#fff",
+                          border: "none",
+                          fontWeight: 900,
+                          fontSize: "1.15rem",
+                          boxShadow: "0 2px 12px #f7ede2",
+                          cursor: "pointer",
+                          transition: "background 0.22s, transform 0.22s",
+                          letterSpacing: 0.5
+                        }}
+                        onMouseOver={e => {
+                          e.currentTarget.style.background = '#b86b2a';
+                          e.currentTarget.style.transform = 'scale(1.07)';
+                        }}
+                        onMouseOut={e => {
+                          e.currentTarget.style.background = 'linear-gradient(135deg,#e29547 60%,#b86b2a 100%)';
+                          e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                        onClick={() => {
+                          navigate("/checkout", {
+                            state: {
+                              items: [item],
+                              source: "buy-now",
+                              customer: {
+                                name: user?.name || "",
+                                email: user?.email || "",
+                              },
+                            },
+                          });
+                        }}
+                      >Buy Now</button>
+                      <button
+                        className="cart-remove-btn"
+                        style={{
+                          padding: "14px 32px",
+                          borderRadius: 12,
+                          background: "#fff",
+                          color: "#b86b2a",
+                          border: "2px solid #e29547",
+                          fontWeight: 900,
+                          fontSize: "1.05rem",
+                          boxShadow: "0 2px 12px #f7ede2",
+                          cursor: "pointer",
+                          transition: "background 0.22s, transform 0.22s",
+                          letterSpacing: 0.5
+                        }}
+                        onMouseOver={e => {
+                          e.currentTarget.style.background = '#fff0df';
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseOut={e => {
+                          e.currentTarget.style.background = '#fff';
+                          e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                        onClick={() => {
+                          dispatch({ type: "REMOVE_FROM_CART", payload: { name: item.product.name } });
+                        }}
+                      >Remove</button>
+                    </div>
                   </li>
                 ))}
               </ul>
               <div style={{ marginTop: 56, textAlign: "center", background: "rgba(255,247,230,0.85)", borderRadius: 20, boxShadow: "0 2px 16px #e29547aa", padding: "40px 0", border: "2.5px solid #e29547", backdropFilter: "blur(6px)" }}>
                 <h2 style={{ color: "#b86b2a", fontWeight: 900, fontSize: 32, marginBottom: 12, letterSpacing: 1 }}>Cart Total</h2>
                 <div style={{ color: "#7c5a36", fontWeight: 900, fontSize: 26, marginBottom: 22 }}>₹{total}</div>
-                <button style={{ padding: "16px 44px", borderRadius: 14, background: "linear-gradient(135deg,#b86b2a 60%,#e29547 100%)", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.25rem", boxShadow: "0 2px 16px #f7ede2", cursor: "pointer", transition: "background 0.22s, transform 0.22s", letterSpacing: 0.5 }} onMouseOver={e => { e.currentTarget.style.background = '#e29547'; e.currentTarget.style.transform = 'scale(1.07)'; }} onMouseOut={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#b86b2a 60%,#e29547 100%)'; e.currentTarget.style.transform = 'scale(1)'; }}>Checkout</button>
+                <button style={{ padding: "16px 44px", borderRadius: 14, background: "linear-gradient(135deg,#b86b2a 60%,#e29547 100%)", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.25rem", boxShadow: "0 2px 16px #f7ede2", cursor: "pointer", transition: "background 0.22s, transform 0.22s", letterSpacing: 0.5 }} onMouseOver={e => { e.currentTarget.style.background = '#e29547'; e.currentTarget.style.transform = 'scale(1.07)'; }} onMouseOut={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#b86b2a 60%,#e29547 100%)'; e.currentTarget.style.transform = 'scale(1)'; }} onClick={handleCheckout}>Checkout</button>
               </div>
             </>
           )}

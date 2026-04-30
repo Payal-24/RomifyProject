@@ -7,9 +7,13 @@ import Contact from "../components/Contact";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
   const [currentPage, setCurrentPage] = useState("home");
+  const navigate = useNavigate();
+  const { isAuthenticated, loading } = useAuth();
 
   const handleContactClick = () => {
     setCurrentPage("contact");
@@ -32,7 +36,17 @@ function Home() {
   };
 
   const handleShopClick = () => {
-    setCurrentPage("items");
+    if (!loading && !isAuthenticated) {
+      navigate("/login", {
+        state: {
+          from: "/items",
+          authMessage: "Please login first to shop.",
+        },
+      });
+      return;
+    }
+
+    navigate("/items");
   };
 
   const handleSignUpSuccess = () => {

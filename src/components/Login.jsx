@@ -1,11 +1,39 @@
 import "./Login.css";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+
+// Social login disabled — removed Google/Facebook flows
+
+const loadScript = (src, id) => {
+  return new Promise((resolve, reject) => {
+    if (document.getElementById(id)) {
+      resolve(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = src;
+    script.async = true;
+    script.defer = true;
+    script.id = id;
+    script.onload = () => resolve(true);
+    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.body.appendChild(script);
+  });
+};
 
 function Login({ onLoginSuccess, onSignUpClick }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
+  const redirectPath = location.state?.from || "/";
+
+  useEffect(() => {
+    if (location.state?.authMessage) {
+      setGeneralError(location.state.authMessage);
+    }
+  }, [location.state]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -19,9 +47,7 @@ function Login({ onLoginSuccess, onSignUpClick }) {
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
-  const [showGoogleModal, setShowGoogleModal] = useState(false);
-  const [googleEmail, setGoogleEmail] = useState("");
-  const [googleEmailError, setGoogleEmailError] = useState("");
+  const [isAdminLogin, setIsAdminLogin] = useState(false);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,17 +92,6 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     }
   };
 
-  const handleGoogleEmailChange = (e) => {
-    const email = e.target.value;
-    setGoogleEmail(email);
-
-    if (email && !validateEmail(email)) {
-      setGoogleEmailError("Please enter a valid email address");
-    } else {
-      setGoogleEmailError("");
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setGeneralError("");
@@ -104,11 +119,12 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     try {
       setIsLoading(true);
 
-      // Call login from AuthContext
-      const response = await login(formData.email, formData.password);
+      // Call login from AuthContext with admin flag
+      const response = await login(formData.email, formData.password, isAdminLogin);
 
       console.log("Login successful:", response);
-      setSuccessMessage("Welcome back!");
+      const messagePrefix = isAdminLogin ? "Admin login successful! Welcome to admin panel." : "Welcome back!";
+      setSuccessMessage(messagePrefix);
       setShowSuccess(true);
 
       // Clear form
@@ -124,7 +140,12 @@ function Login({ onLoginSuccess, onSignUpClick }) {
         if (onLoginSuccess) {
           onLoginSuccess();
         }
-        navigate("/");
+        // Navigate to admin dashboard if admin login
+        if (isAdminLogin) {
+          navigate("/admin");
+        } else {
+          navigate(redirectPath, { replace: true });
+        }
       }, 2000);
     } catch (error) {
       console.error("Login error:", error);
@@ -133,87 +154,9 @@ function Login({ onLoginSuccess, onSignUpClick }) {
     }
   };
 
-  const handleGoogleLogin = () => {
-    setShowGoogleModal(true);
-  };
+  // Social login handlers removed
 
-  const handleGoogleModalSubmit = () => {
-    if (!googleEmail.trim()) {
-      setGoogleEmailError("Please enter an email address");
-      return;
-    }
-
-    if (!validateEmail(googleEmail)) {
-      setGoogleEmailError("Please enter a valid email address");
-      return;
-    }
-
-    setIsLoading(true);
-    setShowGoogleModal(false);
-
-    // Simulate Google login (in production, integrate with Google OAuth)
-    setTimeout(async () => {
-      try {
-        const response = await login(googleEmail, "google-oauth-token");
-
-        setSuccessMessage(`Welcome, ${googleEmail.split("@")[0]}!`);
-        setShowSuccess(true);
-
-        setFormData({
-          email: "",
-          password: "",
-        });
-        setGoogleEmail("");
-        setGoogleEmailError("");
-        setPasswordStrength(0);
-
-        setTimeout(() => {
-          setShowSuccess(false);
-          if (onLoginSuccess) {
-            onLoginSuccess();
-          }
-          navigate("/");
-        }, 2000);
-      } catch (error) {
-        console.error("Google login error:", error);
-        setGeneralError("Google login failed. Please try again.");
-        setIsLoading(false);
-        setShowGoogleModal(true);
-      }
-    }, 1500);
-  };
-
-  const handleFacebookLogin = () => {
-    setIsLoading(true);
-
-    // Simulate Facebook login (in production, integrate with Facebook SDK)
-    setTimeout(async () => {
-      try {
-        const response = await login("user@facebook.com", "facebook-oauth-token");
-
-        setSuccessMessage("Welcome, Facebook User!");
-        setShowSuccess(true);
-
-        setFormData({
-          email: "",
-          password: "",
-        });
-        setPasswordStrength(0);
-
-        setTimeout(() => {
-          setShowSuccess(false);
-          if (onLoginSuccess) {
-            onLoginSuccess();
-          }
-          navigate("/");
-        }, 2000);
-      } catch (error) {
-        console.error("Facebook login error:", error);
-        setGeneralError("Facebook login failed. Please try again.");
-        setIsLoading(false);
-      }
-    }, 1500);
-  };
+  // parseJwtPayload removed
 
   const getPasswordStrengthLabel = () => {
     if (passwordStrength === 0) return "";
@@ -237,8 +180,36 @@ function Login({ onLoginSuccess, onSignUpClick }) {
       <div className="login-container">
         <div className="login-card">
           <div className="login-header">
-            <h1>Welcome Back</h1>
-            <p>Sign in to your Romify account</p>
+            <h1>{isAdminLogin ? "Admin Login" : "Welcome Back"}</h1>
+            <p>{isAdminLogin ? "Sign in to admin panel" : "Sign in to your Romify account"}</p>
+          </div>
+
+          {/* Login Type Tabs */}
+          <div className="login-type-tabs">
+            <button
+              className={`tab-btn ${!isAdminLogin ? "active" : ""}`}
+              onClick={() => {
+                setIsAdminLogin(false);
+                setFormData({ email: "", password: "" });
+                setEmailError("");
+                setPasswordError("");
+                setGeneralError("");
+              }}
+            >
+              Customer Login
+            </button>
+            <button
+              className={`tab-btn ${isAdminLogin ? "active" : ""}`}
+              onClick={() => {
+                setIsAdminLogin(true);
+                setFormData({ email: "", password: "" });
+                setEmailError("");
+                setPasswordError("");
+                setGeneralError("");
+              }}
+            >
+              Admin Login
+            </button>
           </div>
 
           {generalError && (
@@ -327,77 +298,17 @@ function Login({ onLoginSuccess, onSignUpClick }) {
             </p>
           </div>
 
-          <div className="divider">
-            <span>or</span>
-          </div>
-
-          <div className="social-login">
-            <button
-              type="button"
-              className="social-btn google"
-              onClick={handleGoogleLogin}
-              disabled={isLoading}
-            >
-              {isLoading ? "..." : "Google"}
-            </button>
-            <button
-              type="button"
-              className="social-btn facebook"
-              onClick={handleFacebookLogin}
-              disabled={isLoading}
-            >
-              {isLoading ? "..." : "Facebook"}
-            </button>
-          </div>
+          {!isAdminLogin && (
+            <>
+              {/* Social login removed */}
+            </>
+          )}
         </div>
 
         <div className="login-image-section">
           <img src="/assets/loginpic.png" alt="Login" className="login-image" />
         </div>
       </div>
-
-      
-      {showGoogleModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Sign in with Google</h2>
-            <p>Please enter your Google email address</p>
-            
-            <div className="modal-form-group">
-              <input
-                type="email"
-                placeholder="Enter your Google email"
-                value={googleEmail}
-                onChange={handleGoogleEmailChange}
-                className="modal-input"
-              />
-              {googleEmailError && (
-                <span className="error-message">{googleEmailError}</span>
-              )}
-            </div>
-
-            <div className="modal-actions">
-              <button
-                className="modal-btn cancel"
-                onClick={() => {
-                  setShowGoogleModal(false);
-                  setGoogleEmail("");
-                  setGoogleEmailError("");
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                className="modal-btn confirm"
-                onClick={handleGoogleModalSubmit}
-                disabled={!googleEmail.trim() || googleEmailError !== ""}
-              >
-                Continue
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       
       {showSuccess && (
