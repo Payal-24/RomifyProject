@@ -1,7 +1,2 @@
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/romify/index.html" }
-  ]
-
-}
+{}
 

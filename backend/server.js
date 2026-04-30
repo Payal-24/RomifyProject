@@ -8,6 +8,8 @@ import Product from "./models/Product.js";
 // Orders are intentionally not persisted in MongoDB per project settings.
 import nodemailer from "nodemailer";
 import Razorpay from "razorpay";
+import { fileURLToPath } from "url";
+import path from "path";
 
 dotenv.config();
 
@@ -73,13 +75,30 @@ const userSchema = new mongoose.Schema(
 const User = mongoose.model("User", userSchema);
 
 // Connect to MongoDB
+let connectPromise = null;
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
-    console.log(" MongoDB connected successfully");
+    if (mongoose.connection.readyState === 1) {
+      return mongoose.connection;
+    }
+
+    if (!connectPromise) {
+      connectPromise = mongoose
+        .connect(MONGODB_URI)
+        .then(() => {
+          console.log(" MongoDB connected successfully");
+          return mongoose.connection;
+        })
+        .catch((error) => {
+          connectPromise = null;
+          throw error;
+        });
+    }
+
+    return await connectPromise;
   } catch (error) {
     console.error(" MongoDB connection error:", error.message);
-    process.exit(1);
+    throw error;
   }
 };
 
@@ -508,11 +527,25 @@ app.get("/api/orders/:id", (req, res) => {
 });
 
 const startServer = async () => {
-  await connectDB();
-  app.listen(PORT, () => {
-    console.log(` Server running on http://localhost:${PORT}`);
-    console.log(` Try: http://localhost:${PORT}/api/health`);
-  });
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(` Server running on http://localhost:${PORT}`);
+      console.log(` Try: http://localhost:${PORT}/api/health`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
 };
 
-startServer();
+const isVercelRuntime = Boolean(process.env.VERCEL);
+const isDirectRun =
+  process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isDirectRun && !isVercelRuntime) {
+  startServer();
+}
+
+export { app, connectDB };
+export default app;
